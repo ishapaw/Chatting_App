@@ -1,4 +1,5 @@
 import 'package:chatify/chat/helper.dart';
+import 'package:chatify/profile_pic.dart';
 import 'package:chatify/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String _text = "";
+  String _mail = "";
 
   @override
   void initState() {
@@ -24,15 +26,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _text = value.toString();
       });
     });
+
+    HelperFunctions.getuserEmailSharePreference().then((value) {
+      setState(() {
+        _mail = value.toString();
+      });
+    });
   }
 
+  TextEditingController _about = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
             height: double.infinity,
             width: double.infinity,
-            color: Color(0xffE1E0EB),
+            color: Color(0xffFFB2A9),
             padding: EdgeInsets.symmetric(vertical: 48, horizontal: 20),
             child: SingleChildScrollView(
               child: Column(children: [
@@ -50,10 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: 300,
                     height: 540,
                     decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Color(0xff131040),
-                          width: 2,
-                          style: BorderStyle.solid),
+                      color: Colors.white,
                       borderRadius: BorderRadius.all(
                         Radius.circular(15),
                       ),
@@ -63,35 +69,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SizedBox(
                           height: 30,
                         ),
-
+                        ProfilePic(),
                         SizedBox(
                           height: 45,
                         ),
-                        // Container(
-                        //   height: 55,
-                        //   width: 250,
-                        //   margin: EdgeInsets.symmetric(horizontal: 10),
-                        //   child: Container(
-                        //     decoration: BoxDecoration(
-                        //       shape: BoxShape.rectangle,
-                        //       borderRadius: BorderRadius.all(
-                        //         Radius.circular(10.0),
-                        //       ),
-                        //       color: Colors.white,
-                        //     ),
-                        //     child: Center(
-                        //       child: Text(e_mai_l!),
-                        //     ),
-                        //   ),
-                        // ),
+
                         buildTextField(_text, Icons.person),
                         SizedBox(
                           height: 30,
                         ),
-
+                        buildTextField(_mail, Icons.mail),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        _reusableTextField("about", Icons.info, false, _about),
+                        SizedBox(
+                          height: 30,
+                        ),
                         Container(
-                          width: 150,
-                          height: 50,
+                          width: 120,
+                          height: 40,
                           margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
                           child: ElevatedButton(
                             onPressed: () {
@@ -132,19 +129,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             BorderRadius.circular(8)))),
                           ),
                         )
-                        // buildTextField("email", Icons.mail),
-                        // SizedBox(
-                        //   height: 30,
-                        // ),
-                        // buildTextField("Phone", Icons.phone),
-                        // SizedBox(
-                        //   height: 30,
-                        // ),
+
                         // buildTextField("About", Icons.info),
                       ],
                     )),
               ]),
             )));
+  }
+
+  Container _reusableTextField(String text, IconData icon, bool isPasswordType,
+      TextEditingController controller) {
+    bool isObscurePassword = true;
+    return Container(
+      width: 250,
+      height: 55,
+      child: TextField(
+        controller: controller,
+        obscureText: isPasswordType ? isObscurePassword : false,
+        enableSuggestions: !isPasswordType,
+        autocorrect: !isPasswordType,
+        cursorColor: Colors.black,
+        style: TextStyle(
+          color: Colors.black.withOpacity(0.9),
+        ),
+        decoration: InputDecoration(
+          // suffixIcon: isPasswordType
+          //     ? IconButton(
+          //         onPressed: () {
+          //           MaterialStateProperty.resolveWith((states) {
+          //             if (states.contains(MaterialState.pressed)) {
+          //               isObscurePassword = !isObscurePassword;
+          //             }
+          //           });
+          //         },
+          //         icon: Icon(Icons.remove_red_eye, color: Colors.grey),
+          //       )
+          //     : null,
+          prefixIcon: Icon(
+            icon,
+            color: Color(0xff131040),
+          ),
+          hintText: text,
+          hintStyle: TextStyle(
+            color: Color(0xff6A5C5C),
+          ),
+          filled: true,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          fillColor: Color(0xffE1E0EB),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(width: 0, style: BorderStyle.none),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        keyboardType: isPasswordType
+            ? TextInputType.visiblePassword
+            : TextInputType.emailAddress,
+      ),
+    );
   }
 
   Widget buildTextField(String placeholder, IconData icon) {
@@ -159,7 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             borderRadius: BorderRadius.all(
               Radius.circular(10.0),
             ),
-            color: Colors.white,
+            color: Color(0xffE1E0EB),
           ),
           child: Row(
             children: [
@@ -167,7 +208,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 width: 10,
               ),
-              Text(placeholder as String)
+              Text(
+                placeholder as String,
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
+                    color: Colors.black87),
+              )
             ],
           )),
     );

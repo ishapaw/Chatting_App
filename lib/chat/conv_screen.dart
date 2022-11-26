@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:chatify/chat/database.dart';
 import 'package:chatify/chat/share.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,7 +19,6 @@ class ConversationScreen extends StatefulWidget {
 class _ConversationScreenState extends State<ConversationScreen> {
   DatabaseMethod databaseMethod = DatabaseMethod();
   TextEditingController messageController = TextEditingController();
-  Controller
 
   String _text = "";
   String? _userName;
@@ -29,7 +26,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   @override
   void initState() {
-    dataController = Get.find<DataController>();
     databaseMethod.getConversationMessages(widget.chatRoomId)?.then((value) {
       setState(() {
         _userName = widget.userName;
@@ -43,43 +39,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
       setState(() {
         _text = value.toString();
       });
-    });
-  }
-
-  void openMediaDialog(){
-    showDialog(context: context, builder: (context){
-      return AlertDialog(
-       title: Text('Choose'),
-       content:  Row(
-         mainAxisAlignment: MainAxisAlignment.spaceAround,
-         children: [
-           InkWell(
-             onTap: () async{
-               final ImagePicker _picker = ImagePicker();
-               final XFile? image = await _picker.pickImage(source: ImageSource.camera);
-               if(image!=null){
-                 Navigator.pop(context);
-                 messageController.uploadImageToFirebase(image.path);
-               }
-             },
-             child: Icon(Icons.camera_alt,size:30),
-           ),
-           SizedBox(
-             width: 20,
-           ),
-           InkWell(
-             onTap: () async{
-               final ImagePicker _picker = ImagePicker();
-               final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-               if(image!=null){
-                 Navigator.pop(context);
-               }
-             },
-             child: Icon(Icons.image,size:30),
-           )
-         ],
-       ),
-      );
     });
   }
 
@@ -155,9 +114,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         cursorColor: Colors.black,
                         decoration: InputDecoration(
                             suffixIcon: IconButton(
-                              onPressed: () {
-                                openMediaDialog();
-                              },
+                              onPressed: () {},
                               icon: Icon(Icons.photo),
                               color: Color(0xff131040),
                             ),

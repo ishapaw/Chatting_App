@@ -39,15 +39,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(
                   height: 5,
                 ),
-                // Center(
-                //   child: Container(
-                //     height: 150,
-                //     width: 150,
-                //     child: Image(
-                //       image: AssetImage('assets/Group 14.png'),
-                //     ),
-                //   ),
-                // ),
+                Center(
+                  child: Container(
+                    height: 150,
+                    width: 150,
+                    child: Image(
+                      image: AssetImage('assets/Group14.png'),
+                    ),
+                  ),
+                ),
               ],
             ),
             Expanded(

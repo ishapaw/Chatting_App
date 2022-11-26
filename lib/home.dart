@@ -97,16 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 100,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("assets/Group 13.png"),
+                          image: AssetImage("assets/Group14.png"),
                         ),
-                      ),
-                    ),
-                    Text(
-                      "CHATIFY",
-                      style: TextStyle(
-                        color: Color(0xff131040),
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],

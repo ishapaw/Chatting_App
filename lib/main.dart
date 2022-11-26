@@ -56,34 +56,34 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                 height: 60,
               ),
-              // Expanded(
-              //   child: Image(
-              //     image: AssetImage('assets/Group 14.png'),
-              //   ),
-              // ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    child: Text(
-                      'CHAT',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff131040)),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      'IFY',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff131040)),
-                    ),
-                  ),
-                ],
+              Expanded(
+                child: Image(
+                  image: AssetImage('assets/Group14.png'),
+                ),
               ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //       child: Text(
+              //         'CHAT',
+              //         style: TextStyle(
+              //             fontSize: 20,
+              //             fontWeight: FontWeight.bold,
+              //             color: Color(0xff131040)),
+              //       ),
+              //     ),
+              //     Container(
+              //       child: Text(
+              //         'IFY',
+              //         style: TextStyle(
+              //             fontSize: 20,
+              //             fontWeight: FontWeight.bold,
+              //             color: Color(0xff131040)),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Container(
                 height: 70,
               ),
