@@ -1,9 +1,13 @@
 import 'package:chatify/chat/conv_screen.dart';
 import 'package:chatify/chat/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../home.dart';
+import '../profile_screen.dart';
+import '../signin.dart';
 import 'helper.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -156,63 +160,162 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xff131040),
+          iconTheme: IconThemeData(color: Color(0xff131040)),
+          backgroundColor: Colors.white,
+          elevation: 0,
           title: Text(
-            'Search',
+            'CHATIFY',
             style: GoogleFonts.firaSans(
               fontWeight: FontWeight.w500,
               fontSize: 20,
-              color: Color(0xffE1E0EB),
+              color: Color(0xff131040),
             ),
           ),
         ),
-        body: Container(
-            child: Column(children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 5,
-                ),
-                Expanded(
-                  child: TextField(
-                    style: TextStyle(
-                      color: Colors.black.withOpacity(0.9),
-                    ),
-                    controller: _searchController,
-                    cursorColor: Colors.black,
-                    decoration: InputDecoration(
-                        hintText: "search username",
-                        hintStyle: TextStyle(
-                          color: Color(0xff6A5C5C),
+        drawer: Drawer(
+          backgroundColor: Colors.white,
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(20),
+                color: Color(0xffFFB2A9),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/Group14.png"),
+                          ),
                         ),
-                        filled: true,
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        fillColor: Color(0xffE1E0EB),
-                        border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 0, style: BorderStyle.none),
-                          borderRadius: BorderRadius.circular(10.0),
-                        )),
+                      ),
+                    ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    initiateSearch();
+              ),
+              ListTile(
+                leading: IconButton(
+                  color: Color(0xff131040),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfileScreen()));
                   },
-                  child: Icon(
-                    Icons.search,
-                    color: Colors.black,
-                  ),
+                  icon: Icon(Icons.person),
                 ),
-                SizedBox(
-                  width: 7,
-                )
-              ],
-            ),
+                title: Text(
+                  "Profile",
+                  style: TextStyle(fontSize: 16, color: Color(0xff131040)),
+                ),
+              ),
+              ListTile(
+                leading: IconButton(
+                  icon: Icon(Icons.settings),
+                  color: Color(0xff131040),
+                  onPressed: () {},
+                ),
+                title: Text(
+                  "Settings",
+                  style: TextStyle(fontSize: 16, color: Color(0xff131040)),
+                ),
+              ),
+              ListTile(
+                leading: IconButton(
+                  icon: Icon(Icons.help),
+                  color: Color(0xff131040),
+                  onPressed: () {},
+                ),
+                title: Text(
+                  "Help",
+                  style: TextStyle(fontSize: 16, color: Color(0xff131040)),
+                ),
+              ),
+              ListTile(
+                leading: IconButton(
+                  icon: Icon(Icons.info),
+                  color: Color(0xff131040),
+                  onPressed: () {},
+                ),
+                title: Text(
+                  "About us",
+                  style: TextStyle(fontSize: 16, color: Color(0xff131040)),
+                ),
+              ),
+              ListTile(
+                leading: IconButton(
+                  icon: Icon(Icons.logout_rounded),
+                  color: Color(0xff131040),
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut().then((value) {
+                      print("Signed Out");
+                      HelperFunctions.saveuserLoggedInSharePreference(false);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignInScreen()));
+                    });
+                  },
+                ),
+                title: Text(
+                  "Log Out",
+                  style: TextStyle(fontSize: 16, color: Color(0xff131040)),
+                ),
+              ),
+            ],
           ),
-          searchList(),
-        ])));
+        ),
+        body: Container(
+            color: Colors.white,
+            child: Column(children: [
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      child: TextField(
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.9),
+                        ),
+                        controller: _searchController,
+                        cursorColor: Colors.black,
+                        decoration: InputDecoration(
+                            hintText: "search username",
+                            hintStyle: TextStyle(
+                              color: Color(0xff6A5C5C),
+                            ),
+                            filled: true,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            fillColor: Color(0xffE1E0EB),
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 0, style: BorderStyle.none),
+                              borderRadius: BorderRadius.circular(10.0),
+                            )),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        initiateSearch();
+                      },
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 7,
+                    )
+                  ],
+                ),
+              ),
+              searchList(),
+            ])));
   }
 }

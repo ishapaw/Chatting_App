@@ -113,11 +113,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         controller: messageController,
                         cursorColor: Colors.black,
                         decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.photo),
-                              color: Color(0xff131040),
-                            ),
                             hintText: "Message",
                             hintStyle: TextStyle(
                               color: Color(0xff6A5C5C),

@@ -1,6 +1,8 @@
 import 'package:chatify/signin.dart';
 import 'package:flutter/material.dart';
-
+// Color(0xff131040)
+//Color(0xffE1E0EB)
+//Color(0xffFFB2A9)
 import '../signin.dart';
 
 class Constants {

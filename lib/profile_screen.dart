@@ -38,6 +38,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            color: Color(0xff0D0C0C),
+          ),
+          title: Text(
+            'Profile',
+            style:
+                GoogleFonts.firaSans(fontWeight: FontWeight.w400, fontSize: 20),
+          ),
+          backgroundColor: Color(0xffFFB2A9),
+          elevation: 0,
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+        ),
         body: Container(
             height: double.infinity,
             width: double.infinity,
@@ -45,94 +61,100 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: EdgeInsets.symmetric(vertical: 48, horizontal: 20),
             child: SingleChildScrollView(
               child: Column(children: [
-                Center(
-                  child: Text(
-                    'Profile',
-                    style: GoogleFonts.firaSans(
-                        fontWeight: FontWeight.w400, fontSize: 20),
-                  ),
-                ),
+                // Center(
+                //   child: Text(
+                //     'Profile',
+                //     style: GoogleFonts.firaSans(
+                //         fontWeight: FontWeight.w400, fontSize: 20),
+                //   ),
+                // ),
                 SizedBox(
-                  height: 20,
+                  height: MediaQuery.of(context).size.height / 70,
                 ),
-                Container(
-                    width: 300,
-                    height: 540,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
+                Center(
+                  child: Container(
+                      width: 300,
+                      height: 540,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 30,
-                        ),
-                        ProfilePic(),
-                        SizedBox(
-                          height: 45,
-                        ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          ProfilePic(),
+                          SizedBox(
+                            height: 45,
+                          ),
 
-                        buildTextField(_text, Icons.person),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        buildTextField(_mail, Icons.mail),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        _reusableTextField("about", Icons.info, false, _about),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Container(
-                          width: 120,
-                          height: 40,
-                          margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              FirebaseAuth.instance.signOut().then((value) {
-                                print("Signed Out");
-                                HelperFunctions.saveuserLoggedInSharePreference(
-                                    false);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignInScreen()));
-                              });
-                            },
-                            child: Center(
-                              child: Text(
-                                'Log Out',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                          buildTextField(_text, Icons.person),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          buildTextField(_mail, Icons.mail),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          _reusableTextField(
+                              "about", Icons.info, false, _about),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Container(
+                            width: 120,
+                            height: 40,
+                            margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                FirebaseAuth.instance.signOut().then((value) {
+                                  print("Signed Out");
+                                  HelperFunctions
+                                      .saveuserLoggedInSharePreference(false);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SignInScreen()));
+                                });
+                              },
+                              child: Center(
+                                child: Text(
+                                  'Log Out',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
+                              style: ButtonStyle(
+                                  shadowColor: MaterialStateProperty.all<Color>(
+                                      Colors.black),
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) {
+                                    if (states
+                                        .contains(MaterialState.pressed)) {
+                                      return Colors.black;
+                                    }
+                                    return Color(0xff131040);
+                                  }),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8)))),
                             ),
-                            style: ButtonStyle(
-                                shadowColor: MaterialStateProperty.all<Color>(
-                                    Colors.black),
-                                backgroundColor:
-                                    MaterialStateProperty.resolveWith((states) {
-                                  if (states.contains(MaterialState.pressed)) {
-                                    return Colors.black;
-                                  }
-                                  return Color(0xff131040);
-                                }),
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8)))),
-                          ),
-                        )
+                          )
 
-                        // buildTextField("About", Icons.info),
-                      ],
-                    )),
+                          // buildTextField("About", Icons.info),
+                        ],
+                      )),
+                ),
               ]),
             )));
   }

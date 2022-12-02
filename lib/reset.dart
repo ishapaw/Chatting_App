@@ -1,4 +1,5 @@
 import 'package:chatify/widgets/reusable_widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -84,7 +85,12 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 ),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              FirebaseAuth.instance
+                                  .sendPasswordResetEmail(
+                                      email: _emailController.text)
+                                  .then((value) => Navigator.of(context).pop());
+                            },
                             style: ButtonStyle(
                                 shadowColor: MaterialStateProperty.all<Color>(
                                     Colors.black),

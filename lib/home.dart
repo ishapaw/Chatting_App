@@ -68,18 +68,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff131040),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Color(0xff131040)),
+        elevation: 0,
         title: Text(
           'CHATIFY',
           style: GoogleFonts.firaSans(
             fontWeight: FontWeight.w500,
             fontSize: 20,
-            color: Color(0xffE1E0EB),
+            color: Color(0xff131040),
           ),
         ),
       ),
       body: Container(
         child: chatRoomsList(),
+        color: Colors.white,
       ),
       drawer: Drawer(
         backgroundColor: Colors.white,

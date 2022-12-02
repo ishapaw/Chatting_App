@@ -101,7 +101,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   _emailController.text);
                               HelperFunctions.saveuserNameSharePreference(
                                   _userController.text);
-
                               HelperFunctions.saveuserLoggedInSharePreference(
                                   true);
                               Navigator.push(
