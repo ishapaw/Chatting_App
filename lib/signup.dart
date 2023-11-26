@@ -23,6 +23,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
+  String? token;
+
+  getToken() async {
+    token = await HelperFunctions.getTokenSharePreference();
+  }
+
+  @override
+  void initState() {
+    getToken();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,9 +106,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Map<String, String> userInfoMap = {
                                 "name": _userController.text,
                                 "email": _emailController.text,
+                                "pushToken": token != "" ? token! : "f"
                               };
 
-                              databaseMethods.uploadUserInfo(userInfoMap);
+                              databaseMethods.uploadUserInfo(userInfoMap,
+                                  FirebaseAuth.instance.currentUser?.uid);
+
                               HelperFunctions.saveuserEmailSharePreference(
                                   _emailController.text);
                               HelperFunctions.saveuserNameSharePreference(
@@ -125,6 +140,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Column signInOption() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "Already have an account? ",
+              style: TextStyle(color: Color(0xff484752)),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SignUpScreen()));
+              },
+              child: const Text(
+                "Sign",
+                style: TextStyle(
+                    color: Color(0xff131040), fontWeight: FontWeight.bold),
+              ),
+            )
+          ],
+        ),
+      ],
     );
   }
 }

@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 
 import 'bottom_navbar.dart';
 import 'chat/helper.dart';
+import 'chat/push_noti.dart';
 import 'home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseApi().initNotifications();
   runApp(MyApp());
 }
 

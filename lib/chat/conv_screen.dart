@@ -1,4 +1,5 @@
 import 'package:chatify/chat/database.dart';
+import 'package:chatify/chat/push_noti.dart';
 import 'package:chatify/chat/share.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
   TextEditingController messageController = TextEditingController();
 
   String _text = "";
-  String? _userName;
+  String _userName = "";
+  String token = "";
   Stream<QuerySnapshot<dynamic>>? chatMessageStream;
 
   @override
@@ -31,6 +33,12 @@ class _ConversationScreenState extends State<ConversationScreen> {
         _userName = widget.userName;
         chatMessageStream = value;
       });
+    });
+
+    print("user: ${widget.userName}");
+
+    databaseMethod.getUserByUsername(widget.userName).then((snapshot) {
+      token = snapshot?.docs[0].data()["pushToken"];
     });
 
     super.initState();
@@ -129,6 +137,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
+                        FirebaseApi().sendPushNotification(
+                            token, messageController.text, _text);
                         addMessage();
                       },
                       child: Icon(

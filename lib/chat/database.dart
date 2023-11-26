@@ -8,8 +8,15 @@ class DatabaseMethod {
         .get();
   }
 
-  uploadUserInfo(userMap) {
-    FirebaseFirestore.instance.collection("users").add(userMap);
+  uploadUserInfo(userMap, String? id) {
+    FirebaseFirestore.instance.collection("users").doc(id).set(userMap);
+  }
+
+  updateActiveStatus(String? id, String token) {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(id)
+        .update({'pushToken': token});
   }
 
   createChatRoom(String chatRoomId, chatRoomMap) {
